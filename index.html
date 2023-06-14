@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang=zh-CN dir=ltr>
+
+<head>
+    <title>反应速度测试</title>
+    <meta name=description content=本测试通过一个简单的视觉刺激来测试您的反应速度。人类平均反应速度是250毫秒，最高纪录是120毫秒，来看看你的吧！>
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <meta name=keywords content="反应速度测试, 反应测试">
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=5">
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            cursor: default;
+            font-size: 1em;
+            font-family: "Helvetica Neue", Helvetica, "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif
+        }
+
+        @media only screen and (max-width:720px) {
+
+            body,
+            html {
+                height: 100%;
+                margin: 0;
+                cursor: default;
+                font-size: 1em;
+                -webkit-text-size-adjust: none
+            }
+        }
+
+        @media only screen and (min-width:970px) {
+
+            body body,
+            html body {
+                font-size: 1.2em
+            }
+
+            body .hint,
+            html .hint {
+                max-width: 999px
+            }
+        }
+
+        .answer,
+        a,
+        button {
+            user-select: none
+        }
+
+        .ans-on {
+            border-color: #000;
+            box-shadow: #000 0 0 0 1pt
+        }
+
+        .i18n-links a,
+        .quizzes a {
+            margin: 9px;
+            padding: 3px;
+            color: #888;
+            display: none
+        }
+
+        input {
+            font-size: 1em
+        }
+
+        input[type=button],
+        input[type=submit] {
+            -webkit-appearance: button;
+            cursor: pointer
+        }
+
+        a,
+        button {
+            cursor: pointer
+        }
+
+        .hidden {
+            display: none
+        }
+
+        .pure-button {
+            font-family: inherit;
+            font-size: 100%;
+            padding: .5em 1em;
+            color: #444;
+            color: rgba(0, 0, 0, .8);
+            border: 1px solid #999;
+            border: 0 transparent;
+            background-color: #e6e6e6;
+            text-decoration: none;
+            border-radius: 2px
+        }
+
+        .pure-button::-moz-focus-inner {
+            padding: 0;
+            border: 0
+        }
+
+        .pure-button-hover,
+        .pure-button:focus,
+        .pure-button:hover {
+            background-image: linear-gradient(transparent, rgba(0, 0, 0, .05) 40%, rgba(0, 0, 0, .1))
+        }
+
+        .pure-button:focus {
+            outline: 0
+        }
+
+        .pure-button-acitve,
+        .pure-button:active {
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .15) inset, 0 0 6px rgba(0, 0, 0, .2) inset
+        }
+
+        .pure-button-disabled,
+        .pure-button-disabled:active,
+        .pure-button-disabled:focus,
+        .pure-button-disabled:hover,
+        .pure-button[disabled],
+        .pure-button[disabled]:active,
+        .pure-button[disabled]:focus,
+        .pure-button[disabled]:hover {
+            border: 0;
+            background-image: none;
+            opacity: .4;
+            cursor: not-allowed;
+            box-shadow: none
+        }
+
+        .pure-button-hidden {
+            display: none
+        }
+
+        .pure-button-primary,
+        .pure-button-selected,
+        a.pure-button-primary,
+        a.pure-button-selected,
+        button.pure-button-primary,
+        button.pure-button-selected {
+            background-color: #0078e7;
+            color: #fff
+        }
+
+        h1 {
+            line-height: 1em;
+            font-size: 1.25em;
+            padding: .25em 0;
+            margin: 0;
+            text-align: center;
+            line-height: 1em;
+            font-size: 1.25em;
+            padding: .38em;
+            margin: 0;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+            background: #188038;
+            color: #efe
+        }
+
+        @media only screen and (max-width:720px) {
+            h1 {
+                font-size: 1.25em;
+                font-weight: 700
+            }
+        }
+
+        h2 {
+            text-align: center;
+            font-size: .8em
+        }
+
+        .hint {
+            width: 98%;
+            font-size: 1em;
+            background: #f3f3f3;
+            border-radius: 5px;
+            color: #444;
+            margin: 10px auto;
+            padding: 0 0 4px 0;
+            text-align: left
+        }
+
+        @media only screen and (max-width:480px) {
+            .hint {
+                font-size: .75em;
+                margin-top: 6px
+            }
+        }
+
+        .question_view {
+            margin: 20px auto;
+            max-width: 640px;
+            width: 90%;
+            padding: 0 0 200px 0
+        }
+
+        .question_view img {
+            background: rgba(99, 99, 99, .2)
+        }
+
+        #progress {
+            background: #eef;
+            line-height: 1em;
+            height: 4px;
+            font-size: 1em;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            position: relative
+        }
+
+        #progress-bg {
+            background: linear-gradient(to right, #17aacc, #51519f);
+            width: 0;
+            height: 4px;
+            position: absolute;
+            transition: all .2s ease-out
+        }
+
+        #progress-counter {
+            display: none
+        }
+
+        #progress {
+            visibility: hidden
+        }
+
+        #collection {
+            display: none;
+            position: relative
+        }
+
+        #collection img {
+            aspect-ratio: 2
+        }
+
+        #collection>li {
+            zoom: 1;
+            padding: .625em 0;
+            list-style: none;
+            display: none
+        }
+
+        #collection>li:after {
+            clear: both;
+            height: 0;
+            content: "\20";
+            overflow: hidden
+        }
+
+        #result {
+            display: none;
+            text-align: center;
+            font-size: 1em
+        }
+
+        .main_view {
+            margin: 10px auto;
+            box-sizing: border-box
+        }
+
+        @media only screen and (max-width:720px) {
+            .main_view {
+                margin: 20px auto 0;
+                position: relative;
+                padding: 0
+            }
+        }
+
+        @media only screen and (min-width:880px) {
+            .main_view {
+                max-width: 970px
+            }
+        }
+
+        .question {
+            font-weight: 700;
+            font-size: 1.25em;
+            margin-bottom: 1em
+        }
+
+        .answer {
+            border-radius: 5px;
+            font-size: 1em;
+            margin: 5px 0 15px;
+            padding: 9px;
+            cursor: pointer;
+            border: 2px solid #363;
+            border-width: 1px;
+            border-color: #bbb;
+            color: #333;
+            box-shadow: 0 2px 8px -5px
+        }
+
+        .answer:hover {
+            border-color: #000
+        }
+
+        @media only screen and (max-width:720px) {
+            .answer {
+                margin-left: .25em
+            }
+        }
+
+        #splash {
+            text-align: center;
+            margin: 0 auto
+        }
+
+        #splash p {
+            padding: 0 1em
+        }
+
+        #start0 {
+            text-align: center
+        }
+
+        #start {
+            margin: 0 auto 9px;
+            position: relative;
+            background: #888;
+            font-size: 1.5em
+        }
+
+        #start:hover #progress-inner {
+            background: #075398;
+            transition: ease-in-out .2s all
+        }
+
+        .progress-button .content {
+            position: relative;
+            display: block;
+            z-index: 9;
+            opacity: .7;
+            transition: all .2s ease-out
+        }
+
+        .progress-button .progress {
+            background: #148544
+        }
+
+        #progress-inner {
+            border-radius: 2px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #0078e7;
+            height: 100%
+        }
+
+        #loading {
+            display: none;
+            text-align: center
+        }
+
+        #result_details {
+            background: #fff;
+            display: none;
+            padding-bottom: 10px;
+            font-size: .9em;
+            text-align: center;
+            padding: .5em
+        }
+
+        @media only screen and (max-width:480px) {
+            #result_details {
+                border: none
+            }
+        }
+
+        #update-info {
+            font-size: .75em;
+            color: #666
+        }
+
+        #update-info li {
+            padding-right: 15px
+        }
+
+        #fast-wrap {
+            text-align: center;
+            vertical-align: top;
+            margin: 36px 0 30px
+        }
+
+        #social-btnext {
+            height: 60px
+        }
+
+        @media only screen and (max-width:480px) {
+            #social-btnext {
+                height: 50px
+            }
+        }
+
+        #more-btnext {
+            margin-top: 15px;
+            height: 50px
+        }
+
+        .blink_me {
+            animation-name: blinker;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite
+        }
+
+        @keyframes blinker {
+            0% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0
+            }
+
+            100% {
+                opacity: 1
+            }
+        }
+
+        .i18n_links,
+        .samelang_links {
+            margin-top: 15px;
+            font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+            list-style-type: circle;
+            color: #ccc
+        }
+
+        .i18n_links a,
+        .samelang_links a {
+            text-decoration: none;
+            color: #999
+        }
+
+        .i18n_links a:hover,
+        .samelang_links a:hover {
+            text-decoration: underline;
+            color: #000
+        }
+
+        .i18n_links a.current,
+        .samelang_links a.current {
+            color: #000;
+            font-weight: 700
+        }
+
+        .samelang_links_img {
+            text-align: center;
+            margin: 30px auto 0;
+            max-width: 999px;
+            width: 98%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between
+        }
+
+        .samelang_links_img a {
+            margin: 10px 0;
+            box-shadow: 0 1px 5px 0 rgba(38, 38, 38, .1);
+            color: #000;
+            text-decoration: none;
+            box-sizing: border-box;
+            border-radius: 5px;
+            vertical-align: top;
+            width: 32.5%
+        }
+
+        .samelang_links_img a:hover {
+            color: #0078e7;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .5)
+        }
+
+        @media only screen and (max-width:480px) {
+            .samelang_links_img a {
+                color: #000;
+                width: 49%;
+                margin: 10px 1px;
+                background: 0 0;
+                border: none;
+                vertical-align: top
+            }
+        }
+
+        @media only screen and (max-width:480px) {
+            .samelang_links_img {
+                margin-top: 30px
+            }
+        }
+
+        @media only screen and (max-width:720px) {
+            .samelang_links {
+                list-style: none
+            }
+
+            .samelang_links a {
+                display: block;
+                margin: 10px 0 10px -10px;
+                padding: 10px 0;
+                font-size: 1em;
+                text-align: center
+            }
+        }
+
+        .samelang_links_img b {
+            display: block;
+            font-size: .8em;
+            padding: 3px 0 5px;
+            text-decoration: none;
+            word-wrap: break-word;
+            max-width: 200px;
+            text-align: center;
+            margin: 0 auto
+        }
+
+        .samelang_links_img img {
+            width: 100%;
+            border-radius: 5px 5px 0 0;
+            height: inherit;
+            margin: 0
+        }
+
+        .leader_ad_banner,
+        .lowerad {
+            text-align: center;
+            margin: 5px 2px
+        }
+
+        ins {
+            max-width: 970px;
+            margin: 0 auto
+        }
+
+        .ad-desktop,
+        .ad-desktop ins {
+            min-height: 250px
+        }
+
+        .ad-mobile {
+            min-height: 100px
+        }
+
+        .lowerad {
+            min-height: 280px
+        }
+
+        @media only screen and (max-width:480px) {
+            .lowerad {
+                height: 304px !important
+            }
+        }
+
+        @media only screen and (max-width:720px) {
+            .lowerad {
+                height: 304px !important
+            }
+        }
+
+        @media (width:360px) {
+            .lowerad {
+                height: 304px !important
+            }
+        }
+
+        @media (width:375px) {
+            .lowerad {
+                height: 315px !important
+            }
+        }
+
+        @media (width:390px) {
+            .lowerad {
+                height: 330px !important
+            }
+        }
+
+        @media (width:414px) {
+            .lowerad {
+                height: 348px !important
+            }
+        }
+
+        @media only screen and (min-width:880px) {
+            .lowerad {
+                height: 250px !important
+            }
+        }
+
+        @media only screen and (min-width:970px) {
+            .lowerad {
+                height: 250px !important
+            }
+        }
+
+        @media only screen and (min-width:971px) {
+            .ad-mobile {
+                display: none !important
+            }
+        }
+
+        @media only screen and (max-width:970px) {
+            .ad-desktop {
+                display: none !important
+            }
+        }
+
+        .again {
+            display: block;
+            text-align: center;
+            width: 67%;
+            max-width: 300px;
+            margin: 25px auto 9px;
+            padding: 10px 5px;
+            text-decoration: none;
+            border: 1px solid #bbb;
+            color: #666;
+            position: relative;
+            border-radius: 5px;
+            background: #fff
+        }
+
+        .again svg {
+            position: absolute;
+            left: 10px;
+            top: 9px;
+            transition: .2s ease-out
+        }
+
+        .again:hover {
+            border-color: #777;
+            color: #333
+        }
+
+        .again:hover svg {
+            transform: rotate(-90deg)
+        }
+
+        .foot-links {
+            margin: 50px 0
+        }
+
+        .foot-links p {
+            padding: 0;
+            margin: 0
+        }
+
+        .foot-links a {
+            display: inline-block;
+            margin: 10px;
+            font-size: 12px;
+            text-decoration: none;
+            color: #050
+        }
+
+        @media only screen and (max-width:480px) {
+            #chart-container {
+                width: 100%;
+                pointer-events: none
+            }
+        }
+
+        #prestige_hack {
+            font-size: 12px;
+            margin: 18px;
+            text-align: center;
+            color: #006
+        }
+
+        .momo {
+            margin: 40px 0 9px;
+            font-size: .8em;
+            color: #999;
+            opacity: 0
+        }
+
+        #features_details,
+        #question_details {
+            display: none
+        }
+
+        #qe-rslt-title {
+            color: #666
+        }
+
+        #qe-rslt-title b {
+            color: #000;
+            margin: 0 9px
+        }
+
+        #homelink {
+            width: 98%;
+            margin: 30px auto;
+            display: flex;
+            justify-content: space-between;
+            max-width: 999px
+        }
+
+        #homelink a {
+            color: #eee;
+            background: #006400;
+            padding: 16px 21px;
+            text-decoration: none;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 49.5%;
+            max-width: 500px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            font-size: 20px
+        }
+
+        #homelink a svg {
+            margin-right: 6px
+        }
+
+        #homelink #qr_generator_web {
+            background: #666
+        }
+
+        @media only screen and (max-width:480px) {
+            #homelink a#qr_generator_web {
+                margin-top: 3px;
+                font-size: .9em;
+                padding: 11px
+            }
+
+            #homelink {
+                flex-direction: column
+            }
+
+            #homelink a {
+                width: 100%
+            }
+
+            #homelink {
+                justify-content: space-around
+            }
+        }
+
+        .arm-easeout-slow {
+            transition: all 1s ease-out
+        }
+
+        .arm-easeout {
+            transition: all .2s ease-out
+        }
+
+        ::-moz-selection {
+            background: #060;
+            color: #9f9
+        }
+
+        ::selection {
+            background: #060;
+            color: #9f9
+        }
+
+        @media (prefers-color-scheme:dark) {
+            ::-moz-selection {
+                background: #090;
+                color: #000
+            }
+
+            ::selection {
+                background: #090;
+                color: #000
+            }
+        }
+    </style>
+    <style>
+        #iq-number {
+            font-size: 6em;
+            margin: 0
+        }
+
+        #iq-description {
+            font-size: 1em;
+            font-weight: 700;
+            margin: 0;
+            padding: 10px;
+            border-radius: 15px
+        }
+
+        #iq-description span {
+            white-space: nowrap
+        }
+
+        .iq-result-ing {
+            color: #666
+        }
+
+        .iq-result-show {
+            color: #333
+        }
+
+        table.q {
+            margin-top: 5px;
+            font-size: .7em;
+            font-weight: 400;
+            text-align: center;
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        table.q td {
+            border: 1px #bbb solid;
+            padding: 5px
+        }
+
+        .ddd {
+            white-space: normal;
+            text-align: left
+        }
+
+        .dd1 {
+            white-space: normal;
+            text-align: center
+        }
+
+        .xxx {
+            font-size: 22px;
+            vertical-align: middle;
+            margin: 5px auto;
+            font-weight: 400
+        }
+
+        .meta-score {
+            font-size: .5em
+        }
+
+        .ans-correct,
+        .ans-incorrect {
+            background-repeat: no-repeat;
+            background-position-x: right;
+            background-position-y: center
+        }
+
+        .ans-correct {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMzJweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMzIgMjAiPjxwYXRoIGZpbGw9IiMzNDdFMkUiIGQ9Ik0gMjYgMy4zTCAyMi43IDAgOS4yNSAxMy41IDMuMTUgNy40NSAwIDEwLjcgOS4yNSAxOS45NSAyNiAzLjMgWiIvPjwvc3ZnPg==)
+        }
+
+        .ans-incorrect {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMzFweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMzEgMjAiPjxwYXRoIGZpbGw9IiNGRjAwMDAiIGQ9Ik0gMTMuMiAxMEwgMjAgMy4yIDE2Ljc1IDAgMTAgNi43NSAzLjIgMCAwIDMuMiA2Ljc1IDEwIDAgMTYuNzUgMy4yIDIwIDEwIDEzLjIgMTYuNzUgMjAgMjAgMTYuNzUgMTMuMiAxMCBaIi8+PC9zdmc+)
+        }
+    </style>
+    <style>
+        #sResult {
+            margin-bottom: 30px;
+            padding: 25px 0;
+            color: #999
+        }
+
+        #sNumber {
+            font-size: 6em
+        }
+
+        #sStar {
+            font-size: 4em
+        }
+
+        #sText {
+            font-size: 2em
+        }
+    </style>
+    <style>
+        .rcmd-qz {
+            padding: 0 1em;
+            text-align: center
+        }
+
+        .rcmd-qz h6 {
+            margin: 2em 0 0;
+            text-align: center;
+            font-size: 1em;
+            font-weight: 400
+        }
+
+        .rcmd-qz a {
+            border: 1px solid #00880073;
+            box-sizing: border-box;
+            padding: 3px 9px;
+            display: inline-block;
+            color: #080;
+            background: #eaf0ea;
+            font-size: .7em;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: .1s
+        }
+
+        .rcmd-qz a.rcmd-crnt,
+        .rcmd-qz a:hover,
+        .result_case.rcmd-qz a.rcmd-crnt,
+        .result_case.rcmd-qz a:hover {
+            color: #fff;
+            background: #494
+        }
+
+        .rcmd-qz ul {
+            margin-top: .6em;
+            padding: 0;
+            list-style: none
+        }
+
+        .rcmd-qz ul li {
+            display: inline-block;
+            margin: 5px 3px
+        }
+
+        .result_case {
+            text-align: left;
+            background: #efe;
+            padding: 15px !important;
+            border: 1px solid #6a6;
+            border-radius: 5px;
+            margin: 1em auto
+        }
+
+        .result_case.rcmd-qz {
+            text-align: center
+        }
+
+        .result_case.rcmd-qz a {
+            background: #b9f5b9
+        }
+    </style>
+    <style id=darkmode>
+        @media (prefers-color-scheme:dark) {
+            body {
+                background: #000
+            }
+
+            h1 {
+                background: #0e4c21;
+                color: #fff;
+                opacity: .87
+            }
+
+            .hint {
+                background: #1d1d1d;
+                color: #a4a4a4
+            }
+
+            #update-info {
+                color: #707070
+            }
+
+            #update-info span {
+                background: #131 !important;
+                color: #898 !important
+            }
+
+            #progress {
+                background: #666
+            }
+
+            .questionWrapper {
+                color: rgba(255, 255, 255, .6)
+            }
+
+            .answer {
+                color: rgba(255, 255, 255, .6);
+                background-color: #1d1d1d;
+                border-color: #373737;
+                box-shadow: none
+            }
+
+            .answer:hover {
+                border-color: #357238;
+                background-color: #1f2720
+            }
+
+            .ans-on {
+                border-color: #777;
+                box-shadow: #777 0 0 0 1pt
+            }
+
+            .ow-open-btn {
+                background: #323232 !important;
+                color: rgba(255, 255, 255, .6) !important
+            }
+
+            .ow-open-btn svg path {
+                fill: rgba(255, 255, 255, .6) !important
+            }
+
+            .ow-open-btn:hover {
+                color: #fff !important;
+                background: #1d1d1d !important
+            }
+
+            .ow-open-btn:hover svg path {
+                fill: #fff !important
+            }
+
+            .samelang_links_img a {
+                background: #010 !important;
+                color: #686 !important
+            }
+
+            .samelang_links_img img {
+                filter: brightness(.6) !important
+            }
+
+            .samelang_links_img a:hover {
+                background: #000 !important;
+                color: #9a9 !important
+            }
+
+            .samelang_links_img a:hover img {
+                filter: brightness(1) !important
+            }
+
+            #qe-rslt-title {
+                color: #888 !important
+            }
+
+            #qe-rslt-title b {
+                color: #aaa !important
+            }
+
+            #result_details {
+                background: #000
+            }
+
+            .again {
+                background: #1d1d1d;
+                color: rgba(255, 255, 255, .6);
+                border: 1px solid #373737
+            }
+
+            .again:hover {
+                border-color: #357238;
+                background: #1f2720;
+                color: rgba(255, 255, 255, .6)
+            }
+
+            #iq-description {
+                border-color: transparent
+            }
+
+            .subtip {
+                color: #999
+            }
+
+            .subtip h3 {
+                color: #aaa
+            }
+
+            #homelink #arealme_home {
+                color: rgba(255, 255, 255, .6);
+                background: #0e4c21 !important
+            }
+
+            #homelink #arealme_home svg path {
+                fill: #92c18b
+            }
+
+            #homelink #qr_generator_web {
+                background: #242424 !important
+            }
+
+            #homelink #qr_generator_web svg rect {
+                fill: rgba(255, 255, 255, .3)
+            }
+
+            .cps-test-stats path#cps-svg-arrow,
+            .cps-test-stats text {
+                fill: #aaa !important
+            }
+
+            .rcmd-qz a {
+                border: 1px solid #3a413b;
+                background: #1f2720;
+                color: #459944
+            }
+
+            .result_case {
+                background: #111;
+                border: none
+            }
+
+            .result_case.rcmd-qz a {
+                border: 1px solid #3a413b;
+                background: #1f2720;
+                color: #459944
+            }
+
+            .rcmd-qz h6 {
+                color: #898
+            }
+
+            .rcmd-qz a.rcmd-crnt,
+            .rcmd-qz a:hover,
+            .result_case.rcmd-qz a.rcmd-crnt,
+            .result_case.rcmd-qz a:hover {
+                color: #fff;
+                opacity: .87;
+                border: 1px solid #4d8350
+            }
+
+            table.extra-hv {
+                color: #999
+            }
+
+            table.extra-hv td {
+                background: #111;
+                color: #999
+            }
+
+            table.extra-hv th {
+                background: #333;
+                color: #aaa
+            }
+
+            table.extra-hv tr:nth-child(even) td {
+                background-color: #222
+            }
+
+            table.extra-hv tbody {
+                background: #121
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <style>
+        nav#arm_topnav {
+            color: #999;
+            height: 42px;
+            background: #e5e5e5;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 888
+        }
+
+        #arm_topnav_outwrap {
+            max-width: 999px;
+            width: 98%;
+            margin: 0 auto
+        }
+
+        #arm_topnav_wrap {
+            display: flex;
+            height: 42px;
+            align-items: center
+        }
+
+        nav#arm_topnav i {
+            cursor: pointer;
+            justify-content: center;
+            display: flex;
+            height: 42px;
+            width: 42px
+        }
+
+        nav#arm_topnav i svg {
+            width: 16px;
+            vertical-align: middle
+        }
+
+        nav#arm_topnav i svg path {
+            fill: #333
+        }
+
+        nav#arm_topnav i:hover {
+            background: #ddd
+        }
+
+        nav#arm_topnav i:hover svg path {
+            fill: #000
+        }
+
+        #arm_topnav_home {
+            text-decoration: none;
+            font-family: sans-serif, system-ui;
+            font-weight: 700;
+            margin-left: 9px
+        }
+
+        .nav-logo-t1 {
+            color: #000
+        }
+
+        .nav-logo-t2 {
+            color: #fd6331
+        }
+
+        #arm_topnav_home:hover {
+            filter: brightness(1.2)
+        }
+
+        #arm_topnav_close {
+            display: none
+        }
+
+        #arm_topnav_sidebar {
+            display: none;
+            background: #e5e5e5;
+            padding: 9px 33px
+        }
+
+        #arm_topnav_sidebar h2 {
+            text-align: left;
+            margin-top: 0;
+            margin-bottom: 9px;
+            font-size: .9em;
+            color: #000
+        }
+
+        #arm_topnav_sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 0
+        }
+
+        #arm_topnav_sidebar a {
+            font-size: .8em;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 0;
+            display: inline-block
+        }
+
+        #arm_topnav_sidebar a:hover {
+            color: #188038
+        }
+
+        #nav-overlay {
+            position: fixed;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: #000000AA;
+            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(30px);
+            display: none
+        }
+
+        .arm_top_nav_cards {
+            display: flex;
+            flex-wrap: wrap
+        }
+
+        .arm_top_nav_card {
+            width: 270px;
+            margin: 10px 0 10px 0
+        }
+
+        @media only screen and (max-width:600px) {
+            .arm_top_nav_card {
+                width: 100%
+            }
+
+            #arm_topnav_sidebar h2,
+            .arm_top_nav_cards {
+                text-align: center
+            }
+        }
+
+        @media (prefers-color-scheme:dark) {
+            nav#arm_topnav {
+                background: #31353e
+            }
+
+            .nav-logo-t1 {
+                color: #bbb
+            }
+
+            nav#arm_topnav i svg path {
+                fill: #bbb
+            }
+
+            #arm_topnav_sidebar {
+                background: #31353e
+            }
+
+            #arm_topnav_sidebar a {
+                color: #bbb
+            }
+
+            #arm_topnav_sidebar h2 {
+                color: #ddd
+            }
+
+            #arm_topnav_sidebar a:hover {
+                color: #fff
+            }
+
+            nav#arm_topnav i:hover {
+                background: #2c3038
+            }
+
+            nav#arm_topnav i:hover svg path {
+                fill: #fff
+            }
+        }
+    </style>
+
+
+    <script>
+        window.mh_arr = window.mh_arr || [], window.mh_arr.push((function () {
+            $("#arm_topnav_toggle").click((function () {
+                $("#arm_topnav_open,#arm_topnav_sidebar,#arm_topnav_close,#nav-overlay")
+                .toggle()
+            })), $("#nav-overlay").click((function () {
+                $("#arm_topnav_toggle").click()
+            }))
+        }))
+    </script>
+    <div id=progress>
+        <div id=progress-bg></div>
+        <div id=progress-counter><span id=counter>1</span>&#47;<span id=total>?</span></div>
+    </div>
+
+    <div class="leader_ad_banner ad-mobile">
+        <div class=ezoic-ads id=ezoic-pub-ad-placeholder-113></div>
+    </div>
+    <ul class=question_view id=collection></ul>
+    <div class=ui-helper-clearfix id=splash>
+        <div class=hint>
+            <h1>反应速度测试</h1>
+            <p>本测试通过一个简单的视觉刺激来测试您的反应速度。这个测试的规则非常简单：当 <b
+                    style="background:#ba2937;color:#fff;padding:3px 9px;display:inline-block">红色圆</b> 变成 <b
+                    style="background:#46b35d;color:#fff;padding:3px 9px;display:inline-block">绿色圆</b>，以最快的速度点击1次屏幕，点任意位置都可以。<b>以上规则反复5次后，取平均成绩为测试结果</b>。
+            </p>
+            <p>据统计，12岁到60岁的人类平均反应速度是<b>250毫秒</b>，最高纪录是<b>120毫秒</b>，来看看你的吧。</p>
+
+            <script>
+                window.mh_arr = window.mh_arr || [], mh_arr.push((function () {
+                    $(".rcmd-qz a").each((function () {
+                        $(this).attr("href").includes(test_type + "/" + lang_type) && $(this)
+                            .addClass("rcmd-crnt")
+                    }))
+                })), window.rh_arr = window.rh_arr || [], rh_arr.push((function () {
+                    $(".again").before($(".rcmd-qz")), $(".rcmd-qz").addClass("result_case"), $(
+                        ".rcmd-qz h6").css("margin", "0")
+                }))
+            </script>
+
+            <div id=start0><button class="progress-button pure-button pure-button-primary" id=start><span
+                        class=content>开始测试</span><span class=progress><span id=progress-inner></span></span></button>
+                <div class=lowerad><ins class=adsbygoogle style=display:block data-ad-client=ca-pub-4502790166243588
+                        data-ad-slot=8771410920 data-ad-format=auto></ins></div>
+            </div>
+            <ul id=update-info></ul>
+            <ul id=question_details>
+                <li>
+                    <div>
+                        <div class=c_t>1</div>
+                        <div class=c_v value=0>1</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <style>
+            .tag-wrap {
+                margin: 30px auto
+            }
+
+            .tag-wrap a {
+                font-size: .5em;
+                text-decoration: none;
+                display: inline-flex;
+                padding: 0 11px 0 8px;
+                border-radius: 99px 0 0 99px;
+                color: #333;
+                background: #eee;
+                margin: 3px;
+                box-shadow: 0 1px 0 0 rgba(38, 38, 38, .1);
+                border: 1px solid #ddd;
+                align-items: center;
+                width: fit-content;
+                height: 26px
+            }
+
+            .tag-wrap a:before {
+                content: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%229%22%20viewBox%3D%220%200%2020%2020%22%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%2210%22%20fill%3D%22%23bbb%22%3E%3C%2Fcircle%3E%3C%2Fsvg%3E);
+                margin-right: 4px;
+                line-height: 0
+            }
+
+            .tag-wrap a:hover {
+                background: #efe
+            }
+
+            @media (prefers-color-scheme:dark) {
+                .tag-wrap a {
+                    color: #eee;
+                    background: #333;
+                    box-shadow: none;
+                    border: 1px solid #666
+                }
+
+                .tag-wrap a:hover {
+                    background: #363
+                }
+            }
+        </style>
+
+
+
+
+        <script>
+            function initPromo() {
+                $(".samelang_links_img img").each((function () {
+                    var t = $(this).parent("a").attr("href").split("/")[1];
+                    $(this).attr("src",
+                        "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='23px' width='44px'%3E%3Crect width='100%25' fill='rgba(0,0,0,.1)'/%3E%3Ctext font-family='arial' font-style='italic' x='8' y='13' fill='rgba(0,0,0,.1)' font-size='6'%3EA Real Me%3C/text%3E%3C/svg%3E"
+                        ).attr("aw-src", "https://www.arealme.com/newimg/tn_@2x_" + t + ".png")
+                }));
+                var t = [];
+                $(".i18n-links > a").each((function () {
+                    t.push($(this).attr("href").split("/")[2])
+                })), $(".i18n-links").remove()
+            }
+        </script>
+    </div>
+    <div class=main_view id=result_details>
+        <div id=snapshot-container>
+            <div id=qe-rslt-title>您的 <b>平均反应速度</b>:</div>
+            <div class=iq-result-ing id=iq-number></div>
+            <div class=iq-result-ing id=iq-description><b class=blink_me>正在评价...</b></div>
+        </div>
+        <div id=fast-wrap>
+            <div id=social-btnext></div>
+            <div id=more-btnext></div>
+        </div><a class=again href=index.html title=反应速度测试><svg xmlns=http://www.w3.org/2000/svg viewBox="0 0 30 30"
+                width=26>
+                <g fill=#666 fill-rule=evenodd>
+                    <path d="M15 23a8 8 0 1 0 0-16V4A11 11 0 1 1 4 15h3c0 4 4 8 8 8Z" />
+                    <path d="M16 0v11L7 6z" />
+                </g>
+            </svg>再测一次</a>
+    </div>
+    <script>
+        var test = {
+            url: "https://www.arealme.com/reaction-test/cn/",
+            lang: "cn",
+            name: "reaction-test",
+            title: "反应速度测试"
+        };
+
+        function ssT(e) {
+            g("/result/" + e), g("reaction-test/cn/Z", !0), $("#social-btnext > div").on("click", "a", (function () {
+                g("/result/" + e + "/" + $(this).attr("class"))
+            }))
+        }
+
+        function g(e, t) {
+            var n = "send";
+            t && (n = "gT." + n), ga(n, "pageview", e)
+        }
+        $isMan = !/phantomjs/i.test(navigator.userAgent), $isSafari = /Safari/i.test(navigator.userAgent) ||
+            /Apple Computer/i.test(navigator.vendor), $isFB = /;FB/i.test(navigator.userAgent), $isWeixin =
+            "micromessenger" == navigator.userAgent.toLowerCase().match(/MicroMessenger/i), window.og_link = test.url,
+            window.lang_type = test.lang, window.test_type = test.name, window.test_lang = test.lang, window.isDebug =
+            "8080" === location.port;
+        var __v = !0;
+
+        function aload(e, t, n = !1, a = !1) {
+            var i = document,
+                o = window;
+
+            function s() {
+                var o = i.createElement("script");
+                t = t || function () {}, o.onload = t, n && (o.fetchpriority = n), a && (o.crossOrigin = "anonymous"), o
+                    .src = e;
+                try {
+                    i.head.appendChild(o)
+                } catch (e) {
+                    document.documentElement.appendChild(o)
+                }
+            }
+            __v ? (__v = !1, o.addEventListener ? o.addEventListener("load", s, !1) : o.attachEvent ? o.attachEvent(
+                "onload", s) : s()) : s()
+        }
+
+        function getRpId() {
+            return test.url + "RP"
+        }
+
+        function resultParseHelper() {
+            aload("https://www.arealme.com/static/futrb.js", (function () {
+                try {
+                    if (window.rh_arr)
+                        for (var e = 0; e < rh_arr.length; e++) rh_arr[e]();
+                    else resulthook()
+                } catch (e) {}
+            })), localStorage.removeItem(getRpId()), $(".momo,.dummy2,#collection").hide(), $("#progress").css(
+                "visibility", "hidden"), $("#result_details, #emoji").show(), $("#result_details").after($(
+                ".samelang_links_img")), window.scrollTo(0, 0), setTimeout((function () {
+                window.onbeforeunload = null
+            }), 999), $isWeixin && $(".samelang_links_img").before($(
+                '<div style="text-align:center;color:#999"><p>微信公众号: <span style="padding: 0 9px;background:#fcb;color:#900">xiaoshuju</span></p><img style="max-width:312px" src="//www.arealme.com/xsj_wx.png" /></div>'
+                )), uss(), $(".again"), WINDOW_WIDTH < 480 && $("#result_details"), window._h0s_scrolled || (window
+                ._h0s_scrolled = !0, aload("//www.arealme.com/static/scrext.js"))
+        }
+
+        function uss() {
+            var e = _rsbtxt[4],
+                t = "//twitter.com/share?" + i({
+                    text: prestige,
+                    hashtags: e,
+                    url: og_result_url
+                });
+            $(".fastsharetw").attr("href", t), $(".fastsharefb").attr("href",
+                "https://www.facebook.com/sharer/sharer.php?u=" + og_result_url), $(".fastsharefb").unbind(
+                "click.aw").bind("click.aw", (function () {
+                return window.FB ? (FB.ui({
+                    method: "share",
+                    mobile_iframe: "ontouchstart" in window || navigator.msMaxTouchPoints > 0,
+                    href: og_result_url
+                }, (function (e) {})), !1) : void 0
+            }));
+            var n = ` #${e}#`;
+            " ##" == n && (n = "");
+            var a = "http://service.weibo.com/share/share.php?" + i({
+                appkey: "",
+                title: prestige + n,
+                url: og_result_url,
+                pic: og_result_img
+            });
+
+            function i(e) {
+                return Object.keys(e).map((function (t) {
+                    return encodeURIComponent(t) + "=" + encodeURIComponent(e[t])
+                })).join("&")
+            }
+            $(".fastsharewb").attr("href", a), $(".ow-wb").replaceWith($(".ow-wb").clone()), $(".ow-wb").click((
+                function () {
+                    window.open(a)
+                })), "function" == typeof _rsbtxt[6] && _rsbtxt[6]()
+        }! function () {
+            var e = 0,
+                t = setInterval((function () {
+                    var n;
+                    n = e += (100 - e) / 9, document.getElementById("progress-inner").style.width = n + "%",
+                        window.jQuery && e > 95 && ($("#progress-inner").css("width", "100%"), $(
+                            ".progress-button .content").css("opacity", "1"), clearInterval(t))
+                }), 17)
+        }(), aload(
+            "../jquery.textfill.min.js",
+            (function () {
+                var e, t, n, a, i, o;
+                if (window.WINDOW_WIDTH = window.innerWidth, window.og_result_url = og_link, window
+                    .og_result_img = $('meta[property="og:image"]').attr("content"), !navigator.userAgent
+                    .toLowerCase().includes("googlebot") && $isMan) {
+                    var s = !1;
+                    $(window).one("mousemove scroll click", (function () {
+                        s || (s = !0, aload(
+                            "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+                            null, !1, !0), (adsbygoogle = window.adsbygoogle || []).push({
+                            google_ad_client: "ca-pub-4502790166243588",
+                            enable_page_level_ads: !1
+                        }), WINDOW_WIDTH < 971 ? ($(".ad-desktop").remove(), aload(
+                            "//www.ezojs.com/ezoic/sa.min.js", () => {
+                                window.ezstandalone.cmd = window.ezstandalone.cmd || [],
+                                    window.ezstandalone.cmd.push((function () {
+                                        window.ezstandalone.define(113), window
+                                            .ezstandalone.enable(), window
+                                            .ezstandalone.display()
+                                    }))
+                            })) : $(".ad-mobile").remove())
+                    }))
+                }
+                for (var r = 0; r < $('ins[data-ad-client="ca-pub-4502790166243588"]').length; r++) try {
+                    (adsbygoogle = window.adsbygoogle || []).push({})
+                } catch (e) {}
+                if ($isMan) {
+                    t = window, n = document, a = "script", "ga", t.GoogleAnalyticsObject = "ga", t.ga = t.ga ||
+                        function () {
+                            (t.ga.q = t.ga.q || []).push(arguments)
+                        }, t.ga.l = 1 * new Date, i = n.createElement(a), o = n.getElementsByTagName(a)[0], i
+                        .async = 1, i.src = "https://www.google-analytics.com/analytics.js", o.parentNode
+                        .insertBefore(i, o), ga("create", "UA-47573746-20", "auto", "gT"), ga("create",
+                            "UA-147521527-37", "auto"), ga("set", "transport", "beacon"), g(
+                            "reaction-test/cn/A", !0), g("/q-0");
+                    try {
+                        initPromo()
+                    } catch (e) {}
+
+                    function c() {
+                        var e = !0;
+
+                        function t() {
+                            if (e) {
+                                $(".ad-desktop > .adsbygoogle").hide(), $(".arm-fuse").show();
+                                var t = (new Date).getTime();
+                                $(window).click((function () {
+                                    (new Date).getTime() - t > 9999 && (function () {
+                                        var e = window.fusetag || {
+                                            que: []
+                                        };
+                                        $(".fuse-slot").each((function () {
+                                            var t = $(this).attr("id");
+                                            e.que.push((function () {
+                                                e.refreshSlotByCode(
+                                                    t)
+                                            }))
+                                        }))
+                                    }(), t = (new Date).getTime())
+                                }))
+                            }
+                            e = !1, $("[data-fuse-code]").each((function () {
+                                var e = $(this).find(".fuse-slot").height();
+                                $(this).parent().css("min-height", Math.max(255, e))
+                            }))
+                        }
+                        window.fusetag ? t() : aload("https://cdn.fuseplatform.net/publift/tags/2/2080/fuse.js",
+                            t)
+                    }
+                    "1" == localStorage.getItem("scrextloaded") ? aload("//www.arealme.com/static/scrext.js") :
+                        $(window).one("scroll", (function () {
+                            window._h0s_scrolled || (window._h0s_scrolled = !0, aload(
+                                "//www.arealme.com/static/scrext.js", (function () {
+                                    localStorage.setItem("scrextloaded", "1")
+                                })))
+                        })), window.prestige_loaded = function () {
+                            window.prestige_img = og_result_img, uss()
+                        }, $("body").addClass("arealman")
+                } else window.ga = function () {}, $("ins").remove();
+                window.main && main(), window.mh_arr && mh_arr.forEach(e => {
+                    e()
+                }), $("#start").click((function () {
+                    var t = document.createElement("link");
+                    t.href = "https://www.arealme.com/static/futrb.js", t.rel = "preload", t.as =
+                        "script", document.head.appendChild(t), setTimeout((function () {
+                            ! function (e) {
+                                $(".leader_ad_banner").append(
+                                    '<div id="fuseheader" class="arm-fuse" style="margin:5px auto"><div data-fuse="22025438072"></div></div>'
+                                    ), $(".lowerad").css("margin", "5px auto").append($(
+                                    '<div id="fuseheader2" class="arm-fuse"><div data-fuse="22025414353"></div></div>'
+                                    ));
+                                var t = {
+                                    "min-height": "250px"
+                                };
+                                e || (t.display = "none"), $(".arm-fuse").css(t), e ? aload(
+                                    "https://cdn.fuseplatform.net/publift/tags/2/2080/fuse.js",
+                                    (function () {
+                                        fusetag.onSlotRenderEnded((function (e) {
+                                            c()
+                                        }))
+                                    })) : aload(
+                                    "https://cdn.fuseplatform.net/publift/tags/2/2080/fuse.js"
+                                    )
+                            }(!1)
+                        }), 6e4), setTimeout((function () {
+                            $(window).one("click", (function () {
+                                c()
+                            }))
+                        }), 72e3);
+                    for (var n, a, i = (n = $("#question_details > li"), a = [], n.each((
+                    function () {
+                            var e = $(this),
+                                t = [],
+                                n = e.find(".c_t").html().replace(/S\-R\-A\-/gi,
+                                "");
+                            t.push(n), e.find(".c_v").each((function () {
+                                t.push("(" + $(this).attr("value") +
+                                    ")" + $(this).html().replace(
+                                        /S\-R\-A\-/gi, ""))
+                            })), a.push(t.join("\n"))
+                        })), a.join("|")).split("|"), o = [], s = 0; s < i.length; s++) o.push(k(i[
+                        s]));
+                    for (b || (b = ""), _ = o.length, $("#total").text(_), s = 0; s < _; s++) {
+                        var r = o[s],
+                            l = r.q;
+                        l = I(l);
+                        for (var d = r.a, u = '<li id="q' + (s + 1) + '">', w =
+                                '<div class="questionWrapper"><div class="question">' + l +
+                                "</div>", h = 0; h < d.length; h++) {
+                            var f = d[h],
+                                p = I(f.text),
+                                m = f.val,
+                                v = "";
+                            (isDebug || 2 == window.location.href.split("showmethemoney").length) &&
+                            (v = "(" + m + ") "), w += '<div class="answer" value="' + m + '">' +
+                                v + p + "</div>"
+                        }
+                        b += u = u + (w += "</div>") + "</li>"
+                    }
+                    $("#loading").hide(), $("#start").show();
+                    var _, b, y = !1;
+                    if (window.HALT_QDATA) {
+                        var j = {},
+                            x = ($("#answer_config").attr("data-halt"), window.HALT_QDATA.split(
+                                ","));
+                        for (y = !0, s = 0; s < x.length; s++) {
+                            var T = x[s].split(":");
+                            j[T[0]] = T[1]
+                        }
+                    }
+
+                    function q(e) {
+                        var t, n = $("#q" + e);
+                        (t = n).find("img").each((function () {
+                            $(this).attr("src", $(this).attr("shc"))
+                        })), t.find("audio").each((function () {
+                            var e = $(this).find("source").attr("shc");
+                            $(this).html('<source src="' + e + '">')
+                        })), y && j[e] && (n.find(".answer").hide(), $("#q" + e).find(
+                            ".question").append(
+                            '<div style="padding:5px 0;color:#fff;background:#666;width:100%;margin-top:15px;border-radius:5px;text-align:center" id="a_counter"></div>'
+                            ), $({
+                            someValue: 1e3 * j[e]
+                        }).animate({
+                            someValue: 0
+                        }, {
+                            duration: 1e3 * j[e],
+                            easing: "linear",
+                            step: function () {
+                                var e = "选项在%COUNT%秒后出现".replace("%COUNT%", (this
+                                    .someValue / 1e3).toFixed(2));
+                                $("#a_counter").text(e)
+                            },
+                            complete: function () {
+                                $("#a_counter").remove(), $("#q" + e).find(
+                                    ".answer").show()
+                            }
+                        })), n.trigger("QuestionShow"), n.toggle()
+                    }
+
+                    function I(e) {
+                        return e.split("src=").join("shc=")
+                    }
+
+                    function k(e) {
+                        var t = {},
+                            n = (e = (e = $.trim(e)).split("\r").join("")).split("\n");
+                        t.q = n[0], t.a = [];
+                        for (var a = 1; a < n.length; a++) {
+                            var i = {},
+                                o = $.trim(n[a]).match(/\(([a-zA-Z0-9\,]+)\)([^\n]+)/);
+                            i.val = o[1], i.text = o[2], t.a.push(i)
+                        }
+                        return t
+                    }
+                    if ($.TXTHOOK = o, e = 1, window.onbeforeunload = function (e) {
+                            return !0
+                        }, $("#collection").html(b), function () {
+                            function t(e) {
+                                e.attr("value") > 0 ? e.addClass("ans-correct") : e.addClass(
+                                    "ans-incorrect")
+                            }
+
+                            function n(e) {
+                                e.addClass("ans-on").parent().css("pointer-events", "none"), a && (e
+                                    .siblings(".answer").each((function () {
+                                        t($(this))
+                                    })), t(e))
+                            }
+                            var a = !1,
+                                i = window._CD0 || (a ? 999 : 299),
+                                o = [];
+
+                            function s() {
+                                $("#counter").text(e), $("#progress-bg").css("width", 100 * e / _ +
+                                    "%")
+                            }
+                            $(".answer").click((function () {
+                                try {
+                                    o.push($(this).parent().find(".answer").index(
+                                        this)), localStorage.setItem(getRpId(), JSON
+                                            .stringify(o))
+                                } catch (e) {}
+                                var t = $(this),
+                                    a = t.attr("value"),
+                                    r = a.split("to,")[1],
+                                    c = Number(r) === parseInt(r, 10),
+                                    l = !1;
+                                if (c && (a = a.split("to,")[0]), a && (c && (a = a
+                                        .split(",").join("")), updateValue(a)), c &&
+                                    "0" == r && (l = !0), e == _ || l || window
+                                    .override_play) return n($(this)), void setTimeout((
+                                    function () {
+                                        try {
+                                            resultParseHelper()
+                                        } catch (e) {}
+                                        resultParse()
+                                    }), i / 2);
+                                c ? (e = r, n($(this)), setTimeout((function () {
+                                    s(), q(Number(r)), t.parent()
+                                        .parent().toggle()
+                                }), i)) : (e++, n($(this)), setTimeout((
+                            function () {
+                                    s(), q(e), t.parent().parent()
+                                        .toggle()
+                                }), i)), g("q-" + e + "/" + t.index())
+                            }))
+                        }(), window.InjectModifier && window.InjectModifier.constructor ===
+                        Function && void 0 !== InjectModifier()) return !1;
+                    window.ih_arr && ih_arr.forEach(e => {
+                        e()
+                    }), $("#collection").show(), $("#progress").css("visibility", "visible"), $(
+                        "#splash").hide(), $("html, body").animate({
+                        scrollTop: 0
+                    }), q(1)
+                }));
+                try {
+                    JSON.parse(localStorage.getItem(getRpId()))
+                } catch (e) {}
+            }), "high")
+    </script>
+    <script>
+        var prestige, iq_value = 0,
+            prestige_key = "",
+            prestige_img = ""
+    </script>
+    <script>
+        let gender = "";
+        var iq_value = 9999;
+
+        function updateValue(e) {}
+    </script>
+    <style>
+        .tfny_init {
+            text-align: center;
+            margin-top: 99px;
+            font-size: 11px
+        }
+
+        .click_desc {
+            font-size: 2em
+        }
+
+        @keyframes tfny-fadein {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes tfny-fadeout {
+            from {
+                opacity: 1
+            }
+
+            to {
+                opacity: 0
+            }
+        }
+
+        @keyframes bgGradient {
+            0% {
+                background-position: 0 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0 50%
+            }
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: .2
+            }
+
+            20% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: .2
+            }
+        }
+
+        .tfny-container {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-grow: 1;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #2e4b6e, #395799, #3c597a);
+            background-size: 400% 400%;
+            animation: tfny-fadein .2s linear, bgGradient 20s ease infinite;
+            color: #fff;
+            font-family: "Helvetica Neue", Helvetica, "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif
+        }
+
+        .tfny-colWrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            align-items: center;
+            animation: .2s linear tfny-fadein
+        }
+
+        .tfny-rowWrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            animation: .2s linear tfny-fadein
+        }
+
+        .tfny-continueWrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .tfny-graphWrapper {
+            margin-right: 4rem;
+            display: flex;
+            justify-content: center
+        }
+
+        .tfny-h1 {
+            text-align: center;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 .5rem .3rem rgba(0, 0, 0, .2)
+        }
+
+        .tfny-h1-leftAlign {
+            text-align: left;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 400;
+            margin: 0 0 1rem 0;
+            text-shadow: 0 .5rem .3rem rgba(0, 0, 0, .2)
+        }
+
+        .tfny-h2 {
+            text-align: center;
+            font-size: 1.3rem;
+            text-shadow: 0 .2rem .1rem rgba(0, 0, 0, .2);
+            margin-block-start: 0;
+            margin-block-end: 0
+        }
+
+        .tfny-h2-red {
+            color: #e63737
+        }
+
+        .tfny-h2-green {
+            color: #0cf264
+        }
+
+        .tfny-gameText {
+            color: #fff;
+            font-size: 2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 .2rem .1rem rgba(0, 0, 0, .2)
+        }
+
+        .tfny-gameText span {
+            font-family: georgia;
+            animation: 1.4s both infinite blink
+        }
+
+        .tfny-gameText span:nth-child(2) {
+            animation-delay: .2s
+        }
+
+        .tfny-gameText span:nth-child(3) {
+            animation-delay: .4s
+        }
+
+        .tfny-circleRed {
+            max-width: 300px;
+            width: 100%;
+            height: 300px;
+            border-radius: 50%;
+            box-shadow: 0 0 0 10px rgba(242, 12, 12, .5);
+            cursor: pointer;
+            background: #e63737;
+            transition: .2s ease-in-out
+        }
+
+        .tfny-circleGreen {
+            max-width: 300px;
+            width: 100%;
+            height: 300px;
+            border-radius: 50%;
+            box-shadow: 0 0 0 10px rgba(12, 242, 100, .5);
+            cursor: pointer;
+            background: #0cf264;
+            transition: .2s ease-in-out
+        }
+
+        .tfny-icons {
+            margin: 0 auto 15px auto;
+            width: 75px;
+            height: 75px
+        }
+
+        .tfny-icons svg path {
+            box-shadow: 0 0 0 0 #fff
+        }
+
+        .tfny-axis line,
+        .tfny-axis path {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 3px
+        }
+
+        .tfny-graphArea {
+            fill: rgba(255, 255, 255, .4)
+        }
+
+        .tfny-graphLine {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 3px
+        }
+
+        .tfny-dot {
+            fill: #fff;
+            stroke: none
+        }
+
+        .tfny-count {
+            text-align: center;
+            font-size: 180px;
+            border: 1rem solid #fff;
+            color: #fff;
+            border-radius: 50%;
+            width: 245px;
+            line-height: 245px;
+            margin: 1.5rem 0 .5rem 0;
+            text-shadow: 0 .5rem .3rem rgba(0, 0, 0, .2)
+        }
+
+        @media screen and (max-width:790px) {
+            .tfny-continueWrapper {
+                margin-top: .5rem
+            }
+
+            .tfny-graphWrapper {
+                margin-right: 2rem
+            }
+
+            .tfny-count {
+                text-align: center;
+                font-size: 100px;
+                border: .8rem solid #fff;
+                color: #fff;
+                border-radius: 50%;
+                width: 150px;
+                line-height: 150px;
+                margin: 1.5rem 0 .5rem 0
+            }
+
+            .tfny-h1-leftAlign {
+                font-size: 2rem
+            }
+        }
+
+        @media screen and (max-width:400px) {
+
+            .tfny-circleGreen,
+            .tfny-circleRed {
+                max-width: 250px;
+                height: 250px
+            }
+
+            .tfny-graphWrapper {
+                margin-right: 0
+            }
+        }
+    </style>
+    <script>
+        function wx_fix() {
+            var e = $("#snapshot-container");
+
+            function t() {
+                console.log("displayCanvasPrestige"),
+                    function () {
+                        var t =
+                            "#QRHint{line-height:normal;text-align:left;margin-top:39px;background:#eee;padding:9px;display:flex;align-items:center;justify-content:center;}#canvasQR {margin-right:7px}#canvasQR img,#canvasQR canvas{width:64px;padding:5px;background:#fff;box-sizing:border-box}#titleQR{text-align:left}.h222s{overflow:-moz-hidden-unscrollable;overflow:hidden;}#titleQRt{font-size:14px;font-weight:bold}#titleQRd{font-size:10px}";
+                        t = "<style>" + t + "</style>", e.append(t +
+                            "<div id='QRHint'><div id='canvasQR'></div><div id='titleQR'><div id='titleQRt'></div><div id='titleQRd'></div></div></div>"
+                            ), e.find("a").hide(), $("#titleQRt").text(window.qr_hint || $("h1").text()), $(
+                            "#titleQRd").text("长按识别二维码获取你的结果"), e.height();
+                        var n = window.MPURL ? window.MPURL : test.url;
+                        new QR(document.getElementById("canvasQR"), {
+                            text: n,
+                            render: "image",
+                            width: 512,
+                            height: 512,
+                            colorDark: "#333333",
+                            colorLight: "#FFFFFF",
+                            correctLevel: QR.CorrectLevel.L
+                        })
+                    }(), e.find("svg").each((function () {
+                        $(this).attr("width", $(this).width() + "px"), $(this).attr("height", $(this).height() +
+                            "px")
+                    })), $(".pppr, .leader_ad_banner").hide(), setTimeout((function () {
+                        window.scrollTo(0, 0), $("html,body").addClass("h222s"), "function" == typeof window
+                            .h2cStart && window.h2cStart(), html2canvas(e[0], {
+                                scrollX: 0,
+                                scrollY: 0,
+                                scale: 2,
+                                ignoreElements: function (e) {
+                                    return "IFRAME" == e.nodeName
+                                }
+                            }).then((function (t) {
+                                $(".pppr, .leader_ad_banner").show(), window.prestige_img = t
+                                    .toDataURL(), e.find("a").show(), wxImgFix(), clearInterval(_xG), $(
+                                        "html,body").removeClass("h222s"), "function" == typeof window
+                                    .h2cEnd && window.h2cEnd()
+                            }))
+                    }), 1e3)
+            }
+            window.html2canvas ? (console.log("direct h2c"), t()) : (console.log("load h2c"), aload(
+                "//www.arealme.cn/static/h2c.js?v=1", t))
+        }
+
+        function CQLoad() {
+            setTimeout((function () {
+                $("body").append(
+                    '<style id="kplads">.leader_ad_banner, #progress, .google-auto-placed, #wxqr0, .sumome-share-client-wrapper,.google-auto-placed{display:none !important}</style>'
+                    )
+            }), 0)
+        }
+
+        function CQUnLoad() {
+            $("#kplads, #tfny-canvas").remove(), window.block_sumome = !1
+        }
+
+        function resultParse() {
+            var e = [
+                [600, "#666666", "☆", "反应太慢"],
+                [350, "#872900", "★★", "低于平均"],
+                [250, "#877500", "★★☆", "平均水平"],
+                [220, "#008758", "★★★", "高于平均"],
+                [210, "#005187", "★★☆☆", "反应很快"],
+                [190, "#040087", "★★★☆", "非常不错"],
+                [180, "#360087", "★★★★", "反应迅速"],
+                [170, "#7e0087", "★★★★★", "反应敏捷"],
+                [120, "#87006a", "★★★★★★", "人类奇迹"],
+                [-1 / 0, "#87003b", "★★★★★★★", "超神"]
+            ];
+
+            function t(t) {
+                for (var n = 0, a = e.length; n < a; n++) {
+                    let a = e[n];
+                    if (t >= a[0]) return {
+                        color: a[1],
+                        star: a[2],
+                        text: a[3]
+                    }
+                }
+            }
+            prestige = "经鉴定，我的平均反应速度是 %RESULT%毫秒！你能打败我吗？".split("%RESULT%").join(iq_value), document.title = prestige,
+                prestige_key = test.url + iq_value + "A", $("#iq-number, #qe-rslt-title, #iq-description").remove(), $(
+                    "#snapshot-container").html(
+                    '\n    <div id="sResult">\n    <div class="result-title blink_me">正在评价...</div>\n    <div id="sNumber">\n      9999<span class="meta-score">毫秒</span>\n    </div>\n    <div id="sText"></div>\n    <div id="sStar"></div>\n    </div>'
+                    ), ($isMan ? function () {
+                    function e(e) {
+                        var n = t(e),
+                            a = (n.color, n.star),
+                            i = n.text;
+                        $("#sNumber").html(Math.round(e) + '<span class="meta-score">毫秒'), $("#sStar").text(a), $(
+                            "#sText").text(i)
+                    }
+                    $({
+                        val: 9999
+                    }).animate({
+                        val: Number(iq_value)
+                    }, {
+                        duration: 5e3,
+                        easing: "easeOutQuint",
+                        step: function () {
+                            e(this.val)
+                        },
+                        complete: function () {
+                            setTimeout((function () {
+                                ! function () {
+                                    e(iq_value);
+                                    var n = $isMan ? "animate" : "css",
+                                        a = t(iq_value).color;
+                                    $isMan || $("body,#result_details").css(
+                                        "backgroundColor", a), $("#sResult")[n]({
+                                        backgroundColor: a,
+                                        color: "#FFF"
+                                    }), $(".result-title").removeClass("blink_me").html(
+                                        "您的 <b>平均反应速度</b>:"), $(".momo")[n]({
+                                        opacity: 1
+                                    })
+                                }()
+                            }), 0)
+                        }
+                    })
+                } : _CS)(), ssT(iq_value)
+        }
+        window.halt_ajax = !0, location.href.includes("?123") && ($isWeixin = !0), $isWeixin || (window.halt_ajax = !1),
+            window.ih_arr = window.ih_arr || [], window.ih_arr.push((function () {
+                $("#collection").find("li").one("QuestionShow", (function () {
+                    CQLoad(), $(this).find(".questionWrapper").hide(), $("body").append(
+                            '<div id="tfny-canvas"></div>'), $("#tfny-canvas").append(
+                            '<div class="blink_me tfny_init">Loading...</div>'),
+                        function (e, t) {
+                            let n = document.head,
+                                a = document.createElement("script");
+                            a.type = "text/javascript", a.src = "https://d3js.org/d3.v5.min.js", a
+                                .onreadystatechange = t, a.onload = t, n.appendChild(a)
+                        }(0, (function () {
+                            $(".tfny_init").remove(),
+                                function (e, t) {
+                                    let n = document.createElement("section");
+                                    n.classList.add("tfny-container"), e.appendChild(n);
+                                    let a = document.createElement("section");
+                                    a.classList.add("tfny-colWrapper"), a.style.cursor =
+                                        "pointer", $(a).append(
+                                            '<div class="click_desc blink_me">点任何地方开始测试</div>'
+                                            ), n.appendChild(a), a.addEventListener(
+                                            "touchstart", t => {
+                                                a.parentNode.removeChild(a), o(e), t
+                                                    .preventDefault()
+                                            }), a.addEventListener("mousedown", t => {
+                                            a.parentNode.removeChild(a), o(e), t
+                                                .preventDefault()
+                                        });
+                                    let i = 0,
+                                        d = [];
+
+                                    function o(e) {
+                                        let a, l, r = 0,
+                                            s = document.createElement("section");
+                                        s.classList.add("tfny-colWrapper");
+                                        let c = document.createElement("p");
+                                        c.classList.add("tfny-gameText"), c.appendChild(
+                                            document.createTextNode("等待变绿"));
+                                        let p = document.createElement("span");
+                                        p.appendChild(document.createTextNode("."));
+                                        let u = document.createElement("span");
+                                        u.appendChild(document.createTextNode("."));
+                                        let m = document.createElement("span");
+                                        m.appendChild(document.createTextNode(".")), c
+                                            .appendChild(p), c.appendChild(u), c
+                                            .appendChild(m), s.appendChild(c);
+                                        let f = document.createElement("div");
+                                        f.classList.add("tfny-circleRed"), s.appendChild(f);
+                                        let h = document.createElement("section");
+                                        h.classList.add("tfny-colWrapper"), h.style.cursor =
+                                            "pointer";
+                                        let v = document.createElement("div");
+                                        v.classList.add("tfny-icons"), v.innerHTML +=
+                                            '<svg viewBox="0 0 20 20">\n                  <path fill="#fff" d="M18.344,16.174l-7.98-12.856c-0.172-0.288-0.586-0.288-0.758,0L1.627,16.217c0.339-0.543-0.603,0.668,0.384,0.682h15.991C18.893,16.891,18.167,15.961,18.344,16.174 M2.789,16.008l7.196-11.6l7.224,11.6H2.789z M10.455,7.552v3.561c0,0.244-0.199,0.445-0.443,0.445s-0.443-0.201-0.443-0.445V7.552c0-0.245,0.199-0.445,0.443-0.445S10.455,7.307,10.455,7.552M10.012,12.439c-0.733,0-1.33,0.6-1.33,1.336s0.597,1.336,1.33,1.336c0.734,0,1.33-0.6,1.33-1.336S10.746,12.439,10.012,12.439M10.012,14.221c-0.244,0-0.443-0.199-0.443-0.445c0-0.244,0.199-0.445,0.443-0.445s0.443,0.201,0.443,0.445C10.455,14.021,10.256,14.221,10.012,14.221"></path>\n                          <animateTransform attributeType="XML" attributeName="transform" type="scale"       values="1;1.25;1" additive="sum" begin="0s" dur="2s" repeatCount="indefinite"/>\n                          </svg>',
+                                            h.appendChild(v);
+                                        let y = document.createElement("div");
+                                        y.classList.add("tfny-h1"), y.appendChild(document
+                                            .createTextNode("太早啦！")), h.appendChild(y);
+                                        let g = document.createElement("div");
+                                        g.classList.add("tfny-h2"), g.appendChild(document
+                                            .createTextNode("点击重试...")), h.appendChild(
+                                            g);
+                                        let x = document.createElement("section");
+                                        x.classList.add("tfny-colWrapper"), x.style.cursor =
+                                            "pointer";
+                                        let w = document.createElement("div");
+                                        w.classList.add("tfny-h1"), x.appendChild(w);
+                                        let C = document.createElement("section");
+                                        if (C.classList.add("tfny-rowWrapper"), 0 !== i) {
+                                            let e = document.createElement("div");
+                                            e.classList.add("tfny-graphWrapper"), C
+                                                .appendChild(e)
+                                        }
+                                        let L = document.createElement("div");
+                                        L.classList.add("tfny-continueWrapper");
+                                        let b = document.createElement("span");
+                                        if (i < t - 1) {
+                                            let e = document.createElement("div");
+                                            e.classList.add("tfny-h2"), e.appendChild(
+                                                    document.createTextNode("")), L
+                                                .appendChild(e), b.classList.add(
+                                                    "tfny-count"), b.appendChild(document
+                                                    .createTextNode("3"))
+                                        } else b.classList.add("tfny-h1-leftAlign"), b
+                                            .appendChild(document.createTextNode(
+                                            "正在评价..."));
+                                        L.appendChild(b), C.appendChild(L), x.appendChild(
+                                        C);
+                                        let E = document.createElement("div");
+                                        E.classList.add("tfny-h2"), x.appendChild(E), n
+                                            .appendChild(s), s.style.display = "flex";
+                                        let T = Math.floor(2e3 * Math.random()) + 2e3;
+                                        var _ = setTimeout((function () {
+                                            f.classList.add("tfny-circleGreen"),
+                                                f.classList.remove(
+                                                    "tfny-circleRed"), a = Date
+                                                .now(), l = setInterval((
+                                                    function () {
+                                                        let e = Date.now() -
+                                                            a;
+                                                        e < 999 && (e *=
+                                                            .8),
+                                                            function (e) {
+                                                                r = e
+                                                            }(e)
+                                                    })), c.innerText = "现在！"
+                                        }), T);
+
+                                        function R() {
+                                            if (window.innerWidth < 400) var e = 250 - (
+                                                n = {
+                                                    top: 10,
+                                                    right: 10,
+                                                    bottom: 15,
+                                                    left: 15
+                                                }).left - n.right,
+                                                t = 125 - n.top - n.bottom;
+                                            else if (window.innerWidth < 790) e = 275 - (
+                                                n = {
+                                                    top: 10,
+                                                    right: 10,
+                                                    bottom: 15,
+                                                    left: 25
+                                                }).left - n.right, t = 200 - n.top - n
+                                                .bottom;
+                                            else {
+                                                var n;
+                                                e = 450 - (n = {
+                                                        top: 20,
+                                                        right: 20,
+                                                        bottom: 30,
+                                                        left: 50
+                                                    }).left - n.right, t = 350 - n.top - n
+                                                    .bottom
+                                            }
+                                            let a = d3.scaleLinear().domain([1, d3.max(d, (
+                                                    function (e) {
+                                                        return e.round
+                                                    }))]).range([0, e]),
+                                                i = d3.scaleLinear().domain([0, d3.max(d, (
+                                                    function (e) {
+                                                        return e.data
+                                                    }))]).range([t, 0]),
+                                                o = d3.axisBottom().scale(a).tickSize(0)
+                                                .tickValues([]),
+                                                l = d3.axisLeft().scale(i).tickSize(0)
+                                                .tickValues([]),
+                                                r = d3.area().x((function (e) {
+                                                    return a(e.round)
+                                                })).y0(t).y1((function (e) {
+                                                    return i(e.data)
+                                                })),
+                                                s = d3.line().x((function (e) {
+                                                    return a(e.round)
+                                                })).y((function (e) {
+                                                    return i(e.data)
+                                                })),
+                                                c = d3.select(".tfny-graphWrapper").append(
+                                                    "svg").attr("width", e + n.left + n
+                                                    .right).attr("height", t + n.top + n
+                                                    .bottom).append("g").attr("transform",
+                                                    "translate(" + n.left + "," + n.top +
+                                                    ")");
+                                            c.append("path").datum(d).attr("class",
+                                                    "tfny-graphArea").attr("d", r), c
+                                                .append("path").datum(d).attr("class",
+                                                    "tfny-graphLine").attr("d", s), window
+                                                .innerWidth < 790 ? c.selectAll(".tfny-dot")
+                                                .data(d).enter().append("circle").attr(
+                                                    "class", "tfny-dot").attr("cx", (
+                                                    function (e) {
+                                                        return a(e.round)
+                                                    })).attr("cy", (function (e) {
+                                                    return i(e.data)
+                                                })).attr("r", 5) : c.selectAll(".tfny-dot")
+                                                .data(d).enter().append("circle").attr(
+                                                    "class", "tfny-dot").attr("cx", (
+                                                    function (e) {
+                                                        return a(e.round)
+                                                    })).attr("cy", (function (e) {
+                                                    return i(e.data)
+                                                })).attr("r", 7), c.append("g").attr(
+                                                    "class", "tfny-x tfny-axis").attr(
+                                                    "transform", "translate(0," + t + ")")
+                                                .call(o), c.append("g").attr("class",
+                                                    "tfny-y tfny-axis").call(l)
+                                        }
+
+                                        function N() {
+                                            w.appendChild(document.createTextNode(r.toFixed(
+                                                    0) + "." + (99 * Math.random())
+                                                .toFixed(0) + " ms")), d = [...d, {
+                                                round: i,
+                                                data: r
+                                            }], clearInterval(l)
+                                        }
+
+                                        function Q() {
+                                            let t = 2,
+                                                n = setInterval((function () {
+                                                    t < 1 ? (clearInterval(n),
+                                                        document.querySelector(
+                                                            ".tfny-count")
+                                                        .innerHTML = 1, x.style
+                                                        .display = "none", x
+                                                        .parentNode.removeChild(
+                                                            x), o(e)) : (
+                                                        document.querySelector(
+                                                            ".tfny-count")
+                                                        .innerHTML = t, t -= 1)
+                                                }), 1e3)
+                                        }
+
+                                        function k() {
+                                            i >= t ? i = t : i++, E.appendChild(document
+                                                .createTextNode(i + " / " + t))
+                                        }
+
+                                        function M() {
+                                            let e = [],
+                                                t = 0,
+                                                n = 0;
+                                            d.forEach(t => {
+                                                    e.push(t.data)
+                                                }), e.forEach(e => {
+                                                    t += e
+                                                }), n = (t / e.length).toFixed(0),
+                                                iq_value = n, setTimeout((function () {
+                                                    $(".answer:eq(0)").click(),
+                                                        CQUnLoad()
+                                                }), 1e3)
+                                        }
+                                        f.addEventListener("touchstart", e => {
+                                            f.classList.contains("tfny-circleRed") ?
+                                                (n.appendChild(h), h.style.display =
+                                                    "flex", s.parentNode
+                                                    .removeChild(s), clearTimeout(_)
+                                                    ) : f.classList.contains(
+                                                    "tfny-circleGreen") && (n
+                                                    .appendChild(x), x.style
+                                                    .display = "flex", s.parentNode
+                                                    .removeChild(s), k(), N(), i <
+                                                    t && Q(), 1 !== i && R(), i ===
+                                                    t && setTimeout(M, 3e3)), e
+                                                .preventDefault()
+                                        }), f.addEventListener("mousedown", e => {
+                                            f.classList.contains("tfny-circleRed") ?
+                                                (n.appendChild(h), h.style.display =
+                                                    "flex", s.parentNode
+                                                    .removeChild(s), clearTimeout(_)
+                                                    ) : f.classList.contains(
+                                                    "tfny-circleGreen") && (n
+                                                    .appendChild(x), x.style
+                                                    .display = "flex", s.parentNode
+                                                    .removeChild(s), k(), N(), i <
+                                                    t && Q(), 1 !== i && R(), i ===
+                                                    t && setTimeout(M, 3e3)), e
+                                                .preventDefault()
+                                        }), h.addEventListener("touchstart", t => {
+                                            h.style.display = "none", h.parentNode
+                                                .removeChild(h), o(e), t
+                                                .preventDefault()
+                                        }), h.addEventListener("mousedown", t => {
+                                            h.style.display = "none", h.parentNode
+                                                .removeChild(h), o(e), t
+                                                .preventDefault()
+                                        })
+                                    }
+                                }(document.getElementById("tfny-canvas"), 5)
+                        }))
+                }))
+            }))
+    </script>
+</body>
+
+</html>
